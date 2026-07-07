@@ -8,6 +8,12 @@ class Settings(BaseSettings):
     DB_USER: str
     DB_PASSWORD: str
 
+
+
+    LMSTUDIO_BASE_URL: str
+    LMSTUDIO_API_KEY: str
+    LMSTUDIO_MODEL: str
+
     model_config = SettingsConfigDict(
         env_file=".env",
         extra="ignore"
@@ -15,3 +21,4 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
+
