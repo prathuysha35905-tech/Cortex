@@ -1,15 +1,16 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
 
-from app.schemas.chat import ChatRequest, ChatResponse
-from app.services.ai_service import chat_with_cortex
+from app.database.database import get_db
+from app.schemas.chat import ChatRequest
+from app.services.planner_service import process_message
 
 router = APIRouter(prefix="/chat", tags=["Chat"])
 
 
-@router.post("/", response_model=ChatResponse)
-def chat(request: ChatRequest):
-    response = chat_with_cortex(request.message)
-
-    return ChatResponse(
-        response=response
-    )
+@router.post("/")
+def chat(
+    request: ChatRequest,
+    db: Session = Depends(get_db)
+):
+    return process_message(request.message, db)

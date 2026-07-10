@@ -3,7 +3,14 @@ from datetime import datetime
 
 from app.database.base import Base
 
+from sqlalchemy import Boolean
 
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship
+
+is_recurring = Column(Boolean, default=False)
+
+recurrence = Column(String, default="")
 class Task(Base):
     __tablename__ = "tasks"
 
@@ -20,3 +27,14 @@ class Task(Base):
         default=datetime.utcnow,
         onupdate=datetime.utcnow
     )
+
+    user_id = Column(
+    Integer,
+    ForeignKey("users.id"),
+    nullable=False
+)
+    
+    user = relationship(
+    "User",
+    back_populates="tasks"
+)
