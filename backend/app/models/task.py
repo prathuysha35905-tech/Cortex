@@ -25,6 +25,12 @@ class Task(Base):
 
     created_at = Column(DateTime, default=datetime.utcnow)
 
+    is_archived = Column(Boolean, default=False)
+
+    archived_at = Column(DateTime, nullable=True)
+
+    is_important = Column(Boolean, default=False)
+
     updated_at = Column(
         DateTime,
         default=datetime.utcnow,

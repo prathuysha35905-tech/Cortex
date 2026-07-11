@@ -6,6 +6,7 @@ from app.api.tasks import router as task_router
 from app.api.habits import router as habit_router
 from app.api.coach import router as coach_router
 from app.api.auth import router as auth_router
+from app.api.analytics import router as analytics_router
 
 
 import app.models.task
@@ -23,6 +24,7 @@ app.include_router(task_router)
 app.include_router(habit_router)
 app.include_router(coach_router)
 app.include_router(auth_router)
+app.include_router(analytics_router)
 @app.get("/")
 def home():
     return {
