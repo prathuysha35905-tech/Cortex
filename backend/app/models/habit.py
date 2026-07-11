@@ -17,13 +17,11 @@ class Habit(Base):
     description = Column(String, default="")
 
     frequency = Column(String, default="Daily")
-
     target_count = Column(Integer, default=1)
 
     completed_today = Column(Boolean, default=False)
 
     current_streak = Column(Integer, default=0)
-
     longest_streak = Column(Integer, default=0)
 
     created_at = Column(DateTime, default=datetime.utcnow)
@@ -33,13 +31,14 @@ class Habit(Base):
         default=datetime.utcnow,
         onupdate=datetime.utcnow
     )
-    user_id = Column(
-    Integer,
-    ForeignKey("users.id"),
-    nullable=False
-)
 
-user = relationship(
-    "User",
-    back_populates="habits"
-)
+    user_id = Column(
+        Integer,
+        ForeignKey("users.id"),
+        nullable=False
+    )
+
+    user = relationship(
+        "User",
+        back_populates="habits"
+    )
