@@ -35,3 +35,10 @@ class User(Base):
     "Habit",
     back_populates="user"
 )
+
+
+memories = relationship(
+    "Memory",
+    back_populates="user",
+    cascade="all, delete-orphan"
+) 
