@@ -9,6 +9,10 @@ from sqlalchemy.orm import relationship
 
 
 class Habit(Base):
+
+    is_archived = Column(Boolean, default=False)
+
+    archived_at = Column(DateTime, nullable=True)
     __tablename__ = "habits"
 
     id = Column(Integer, primary_key=True, index=True)
