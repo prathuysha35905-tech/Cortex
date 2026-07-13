@@ -1,9 +1,9 @@
 from datetime import datetime
 
 from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy.orm import relationship
 
 from app.database.base import Base
-from sqlalchemy.orm import relationship
 
 
 class User(Base):
@@ -28,17 +28,17 @@ class User(Base):
     )
 
     tasks = relationship(
-    "Task",
-    back_populates="user"
-)
+        "Task",
+        back_populates="user"
+    )
+
     habits = relationship(
-    "Habit",
-    back_populates="user"
-)
+        "Habit",
+        back_populates="user"
+    )
 
-
-memories = relationship(
-    "Memory",
-    back_populates="user",
-    cascade="all, delete-orphan"
-) 
+    memories = relationship(
+        "Memory",
+        back_populates="user",
+        cascade="all, delete-orphan"
+    )

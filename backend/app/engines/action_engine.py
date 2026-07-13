@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
-
-from app.models.user import User
-from backend.app.engines.task_engine import execute_create_task
 from app.engines.task_engine import execute_create_task
+from app.models.user import User
+from app.engines.task_engine import execute_create_task
+from app.engines.memory_engine import execute_save_memory
 
 def execute_actions(
     actions: list,
@@ -26,8 +26,13 @@ def execute_actions(
 )
 
         elif intent == "save_memory":
-            # We'll implement next
-            results.append("Memory saved")
+            results.append(
+                execute_save_memory(
+                    action,
+                    db,
+                    current_user
+                )
+            )
 
         else:
             results.append(

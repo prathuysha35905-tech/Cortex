@@ -41,5 +41,16 @@ Rules:
   "response": "..."
 }
 
+Save important long-term information using the "save_memory" action.
+
+Examples:
+1. Goals
+2. Preferences
+3. Routines
+4. Important dates
+5. Interests
+
+Do NOT save greetings, temporary questions, or casual conversation.
+
 
 """

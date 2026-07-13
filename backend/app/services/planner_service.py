@@ -1,18 +1,17 @@
 from sqlalchemy.orm import Session
 
 from app.ai.parser import parse_ai_response
-from app.schemas.task import TaskResponse
 from app.services.ai_service import chat_with_cortex
-from app.services.task_normalizer import normalize_task
 from app.services.task_service import (
-    create_task,
     get_all_tasks,
     generate_recurring_tasks,
 )
 from app.services.planning_state import save_plan
+
 from app.engines.intent_router import detect_intent
 from app.engines.planning_engine import build_daily_plan
 from app.engines.plan_modifier import modify_plan
+from app.engines.action_engine import execute_actions
 
 
 def process_message(
@@ -20,11 +19,11 @@ def process_message(
     db: Session,
     current_user
 ):
+    # -----------------------
+    # LOCAL INTENTS
+    # -----------------------
     intent = detect_intent(message)
 
-    # -----------------------
-    # PLAN MY DAY
-    # -----------------------
     if intent == "plan_day":
 
         tasks = get_all_tasks(
@@ -58,48 +57,30 @@ def process_message(
         return modify_plan(message)
 
     # -----------------------
-    # NORMAL AI CHAT
+    # AI
     # -----------------------
     ai_response = chat_with_cortex(message)
 
-    print("========== AI RESPONSE ==========")
+    print("\n========== AI RESPONSE ==========")
     print(ai_response)
-    print("=================================")
+    print("=================================\n")
 
     parsed = parse_ai_response(ai_response)
 
-    print("========== PARSED ==========")
+    print("\n========== PARSED ==========")
     print(parsed)
-    print("============================")
+    print("============================\n")
 
-    intent = parsed.get("intent")
+    actions = parsed.get("actions", [])
 
-    if intent == "create_task":
-
-        task = normalize_task(parsed)
-
-        saved_task = create_task(
-            db,
-            task,
-            current_user.id
-        )
-
-        return {
-            "status": "success",
-            "message": "Task created successfully.",
-            "task": TaskResponse.model_validate(saved_task).model_dump()
-        }
-
-    elif intent == "chat":
-
-        return {
-            "status": "success",
-            "response": parsed["response"]
-        }
+    results = execute_actions(
+        actions,
+        db,
+        current_user
+    )
 
     return {
-        "status": "error",
-        "message": "AI returned an invalid response.",
-        "ai_response": ai_response,
-        "parsed": parsed
+        "status": "success",
+        "response": parsed.get("response", ""),
+        "actions": results
     }
