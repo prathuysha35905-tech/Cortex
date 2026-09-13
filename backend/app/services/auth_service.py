@@ -37,11 +37,13 @@ def create_user(db: Session, user: UserCreate):
 
 def authenticate_user(
     db: Session,
-    email: str,
+    identifier: str,
     password: str
 ):
-
-    user = get_user_by_email(db, email)
+    # The frontend login form collects a *username*, but this is also
+    # called "email" historically here - accept either so login works
+    # regardless of which one was actually typed in.
+    user = get_user_by_username(db, identifier) or get_user_by_email(db, identifier)
 
     if not user:
         return None

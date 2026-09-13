@@ -5,6 +5,7 @@ from datetime import datetime
 from app.database.base import Base
 
 
+
 class Task(Base):
     __tablename__ = "tasks"
 

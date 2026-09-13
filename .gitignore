@@ -1,0 +1,29 @@
+node_modules/
+.next/
+out/
+build/
+.env*.local
+.DS_Store
+*.tsbuildinfo
+next-env.d.ts
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Node
+node_modules/
+.next/
+dist/
+
+# Archives
+*.zip
+
+# IDE
+.vscode/
+.idea/

@@ -1,0 +1,195 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
+.font-display { font-family: 'Cormorant Garamond', serif; }
+
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .fade-up {
+        opacity: 0;
+        animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+      .hover-lift {
+        transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+      }
+      .hover-lift:hover {
+        transform: translateY(-2px);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 3px 6px rgba(10,10,8,0.08), 0 14px 30px rgba(10,10,8,0.14);
+        border-color: #C9C9C1 !important;
+      }
+      .shine-sweep {
+        position: absolute;
+        top: -60%;
+        left: -30%;
+        width: 45%;
+        height: 220%;
+        background: linear-gradient(
+          75deg,
+          transparent 20%,
+          rgba(255,255,255,0.55) 48%,
+          rgba(255,255,255,0.75) 52%,
+          transparent 80%
+        );
+        transform: translateX(-220%) rotate(8deg);
+        pointer-events: none;
+        opacity: 0;
+      }
+      .shine-card:hover .shine-sweep {
+        animation: sweep 950ms ease forwards;
+      }
+      @keyframes sweep {
+        0% { transform: translateX(-220%) rotate(8deg); opacity: 0; }
+        15% { opacity: 1; }
+        100% { transform: translateX(220%) rotate(8deg); opacity: 0; }
+      }
+      .glossy-btn {
+        position: relative;
+        overflow: hidden;
+      }
+      .glossy-btn::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0) 45%);
+        pointer-events: none;
+      }
+      .glitter, .glitter-sm {
+        position: relative;
+        overflow: hidden;
+      }
+      .glitter::before, .glitter::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        mix-blend-mode: screen;
+      }
+      .glitter::before {
+        background-image:
+          radial-gradient(1.6px 1.6px at 15% 22%, #fff, transparent 60%),
+          radial-gradient(1.2px 1.2px at 78% 15%, #fff, transparent 60%),
+          radial-gradient(1.4px 1.4px at 38% 68%, #fff, transparent 60%),
+          radial-gradient(1.8px 1.8px at 88% 55%, #fff, transparent 60%),
+          radial-gradient(1px 1px at 55% 42%, #fff, transparent 60%),
+          radial-gradient(1.3px 1.3px at 8% 82%, #fff, transparent 60%),
+          radial-gradient(1px 1px at 92% 85%, #fff, transparent 60%),
+          radial-gradient(1.5px 1.5px at 28% 8%, #fff, transparent 60%);
+        animation: twinkleA 3.2s ease-in-out infinite;
+      }
+      .glitter::after {
+        background-image:
+          radial-gradient(1.2px 1.2px at 62% 28%, #fff, transparent 60%),
+          radial-gradient(1px 1px at 20% 48%, #fff, transparent 60%),
+          radial-gradient(1.6px 1.6px at 70% 78%, #fff, transparent 60%),
+          radial-gradient(1px 1px at 45% 90%, #fff, transparent 60%),
+          radial-gradient(1.3px 1.3px at 95% 30%, #fff, transparent 60%),
+          radial-gradient(1px 1px at 5% 15%, #fff, transparent 60%);
+        animation: twinkleB 3.8s ease-in-out infinite;
+        animation-delay: 0.9s;
+      }
+      .glitter-sm::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        mix-blend-mode: screen;
+        background-image:
+          radial-gradient(1px 1px at 22% 30%, #fff, transparent 60%),
+          radial-gradient(1px 1px at 68% 60%, #fff, transparent 60%),
+          radial-gradient(1px 1px at 48% 82%, #fff, transparent 60%),
+          radial-gradient(1px 1px at 85% 25%, #fff, transparent 60%);
+        animation: twinkleA 2.4s ease-in-out infinite;
+      }
+      @keyframes twinkleA {
+        0%, 100% { opacity: 0.35; }
+        50% { opacity: 1; }
+      }
+      @keyframes twinkleB {
+        0%, 100% { opacity: 0.25; }
+        50% { opacity: 0.9; }
+      }
+      @keyframes barGrow {
+        from { width: 0%; }
+        to { width: var(--w); }
+      }
+      .bar-grow {
+        width: 0%;
+        animation: barGrow 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        animation-delay: 0.4s;
+      }
+      @keyframes pingSlow {
+        0% { transform: scale(1); opacity: 0.6; }
+        75%, 100% { transform: scale(2.2); opacity: 0; }
+      }
+      .pulse-ping {
+        animation: pingSlow 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+      }
+      @keyframes panelDrop {
+        from { opacity: 0; transform: translateY(-6px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .panel-drop {
+        animation: panelDrop 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+      @keyframes typingBounce {
+        0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+        30% { transform: translateY(-4px); opacity: 1; }
+      }
+      .typing-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        display: inline-block;
+        animation: typingBounce 1.1s ease-in-out infinite;
+      }
+      .task-row {
+        transition: background 150ms ease, border-color 150ms ease, opacity 150ms ease, transform 150ms ease;
+      }
+      .task-row.dragging {
+        opacity: 0.45;
+      }
+      .task-row.drag-over {
+        border-color: #0D0D0C !important;
+      }
+      .drag-handle {
+        cursor: grab;
+      }
+      .drag-handle:active {
+        cursor: grabbing;
+      }
+      .cat-pill {
+        transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
+      }
+      .icon-btn {
+        transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
+      }
+      .icon-btn:hover {
+        background: #E4E4DE;
+      }
+      .chat-scroll::-webkit-scrollbar {
+        width: 6px;
+      }
+      .chat-scroll::-webkit-scrollbar-thumb {
+        background: #C9C9C1;
+        border-radius: 999px;
+      }
+      input[type="text"]::placeholder, textarea::placeholder { color: #8F8F89; }
+      @media (prefers-reduced-motion: reduce) {
+        .fade-up, .bar-grow, .pulse-ping, .typing-dot {
+          animation: none !important;
+          opacity: 1 !important;
+          width: var(--w, 100%) !important;
+        }
+        .hover-lift:hover { transform: none; }
+        .shine-card:hover .shine-sweep { animation: none !important; }
+        .glitter::before, .glitter::after, .glitter-sm::after { animation: none !important; opacity: 0.6 !important; }
+        .panel-drop { animation: none !important; opacity: 1 !important; }
+      }
+      ::selection { background: rgba(13,13,12,0.12); }
+      button:focus-visible, [tabindex]:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+        outline: 1.5px solid #0D0D0C;
+        outline-offset: 2px;
+      }
+    

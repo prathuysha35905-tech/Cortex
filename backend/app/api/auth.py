@@ -1,10 +1,13 @@
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
+from pydantic import BaseModel, EmailStr
+from typing import Optional
 
 from app.database.database import get_db
 from app.schemas.user import UserCreate, UserLogin, UserResponse
-from app.core.auth import create_access_token
+from app.core.auth import create_access_token, get_current_user
+from app.models.user import User
 
 from app.services.auth_service import (
     create_user,
@@ -66,3 +69,41 @@ def login(
             "username": authenticated_user.username
         }
     }
+
+
+class UserUpdate(BaseModel):
+    full_name: Optional[str] = None
+    email: Optional[EmailStr] = None
+
+
+@router.get("/me", response_model=UserResponse)
+def get_me(
+    current_user: User = Depends(get_current_user)
+):
+    return current_user
+
+
+@router.patch("/me", response_model=UserResponse)
+def update_me(
+    payload: UserUpdate,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    if payload.full_name is not None:
+        current_user.full_name = payload.full_name
+    if payload.email is not None:
+        current_user.email = payload.email
+
+    db.commit()
+    db.refresh(current_user)
+
+    return current_user
+
+
+@router.post("/logout")
+def logout(
+    current_user: User = Depends(get_current_user)
+):
+    # JWTs are stateless here (no server-side session/blacklist), so
+    # logging out just means the frontend should drop the token.
+    return {"message": "Logged out successfully."}
